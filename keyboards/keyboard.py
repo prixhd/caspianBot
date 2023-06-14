@@ -17,10 +17,40 @@ async def start_command():
     return startKeyboard
 
 
-async def form_for_team_command():
-    fromTeamKeyboard = InlineKeyboardMarkup()
-    fromTeamKeyboard.row(InlineKeyboardButton(text="Да", callback_data="yes"))
-    return fromTeamKeyboard
+async def changes_command():
+    changesKeyboard = InlineKeyboardMarkup()
+    changesKeyboard.row(InlineKeyboardButton(text="Да", callback_data="yes_changes")).row(InlineKeyboardButton(text="Нет", callback_data="no_changes"))
+    return changesKeyboard
+
+
+async def form_for_team_unsuccess_command():
+    formTeamUnsuccessKeyboard = InlineKeyboardMarkup()
+
+    formTeamUnsuccessKeyboard.row(InlineKeyboardButton(text='1', callback_data="first_question_form"),
+                                  InlineKeyboardButton(text='2', callback_data="second_question_form"),
+                                  InlineKeyboardButton(text='3', callback_data="third_question_form"))
+
+    return formTeamUnsuccessKeyboard
+
+
+async def order_work_unsuccess_command():
+    orderWorkUnsuccessKeyboard = InlineKeyboardMarkup()
+
+    var = orderWorkUnsuccessKeyboard.row(InlineKeyboardButton(text='1', callback_data="1_q_order"),
+                                         InlineKeyboardButton(text='2', callback_data="2_q_order")) \
+        .row(InlineKeyboardButton(text='3', callback_data="3_q_order"),
+             InlineKeyboardButton(text='4', callback_data="4_q_order")) \
+        .row(InlineKeyboardButton(text='5', callback_data="5_q_order"),
+             InlineKeyboardButton(text='6', callback_data="6_q_order")) \
+        .row(InlineKeyboardButton(text='7', callback_data="7_q_order"),
+             InlineKeyboardButton(text='8', callback_data="8_q_order")) \
+        .row(InlineKeyboardButton(text='9', callback_data="9_q_order"),
+             InlineKeyboardButton(text='10', callback_data="10_q_order")) \
+        .row(InlineKeyboardButton(text='11', callback_data="11_q_order"),
+             InlineKeyboardButton(text='12', callback_data="12_q_order")) \
+        .row(InlineKeyboardButton(text='13', callback_data="13_q_order"))
+
+    return orderWorkUnsuccessKeyboard
 
 
 # KEYBOARD FROM CHOOSE ORDER WORK IN CASPIAN TECH

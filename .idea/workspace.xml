@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75c5f50f-44fe-423d-98a0-c46c5a98ad58" name="Changes" comment="добавил описание бота и функцию валидации номера телефона">
-      <change afterPath="$PROJECT_DIR$/database/db.db" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/db.py" afterDir="false" />
+    <list default="true" id="75c5f50f-44fe-423d-98a0-c46c5a98ad58" name="Changes" comment="Версия=1.2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/db.db" beforeDir="false" afterPath="$PROJECT_DIR$/database/db.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/keyboards/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/keyboards/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/keyboards/keyboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/keyboards/keyboard.py" afterDir="false" />
     </list>
@@ -35,26 +34,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "feat/sqlite3",
-    "last_opened_file_path": "C:/Users/HP Victus/GitHub/caspianBot/database/db.db",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Language Defaults",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/sqlite3&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/HP Victus/GitHub/caspianBot/database/db.db&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Language Defaults&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "sqlite"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlite&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\HP Victus\GitHub\caspianBot" />
@@ -148,6 +147,12 @@
       <workItem from="1686428301088" duration="568000" />
       <workItem from="1686483167356" duration="1183000" />
       <workItem from="1686484667551" duration="13648000" />
+      <workItem from="1686499525536" duration="2208000" />
+      <workItem from="1686506850930" duration="616000" />
+      <workItem from="1686521329935" duration="17000" />
+      <workItem from="1686650511798" duration="10324000" />
+      <workItem from="1686691340097" duration="547000" />
+      <workItem from="1686739086665" duration="3760000" />
     </task>
     <task id="LOCAL-00001" summary="добавил описание бота и функцию валидации номера телефона">
       <created>1686309297087</created>
@@ -156,18 +161,37 @@
       <option name="project" value="LOCAL" />
       <updated>1686309297087</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Версия=1.2">
+      <created>1686503505805</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1686503505805</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="добавил описание бота и функцию валидации номера телефона" />
-    <option name="LAST_COMMIT_MESSAGE" value="добавил описание бота и функцию валидации номера телефона" />
+    <MESSAGE value="Версия=1.2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Версия=1.2" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/caspianBot$db.coverage" NAME="db Coverage Results" MODIFIED="1686483677713" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/database" />
-    <SUITE FILE_PATH="coverage/caspianBot$bot.coverage" NAME="bot Coverage Results" MODIFIED="1686490199246" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/caspianBot$bot.coverage" NAME="bot Coverage Results" MODIFIED="1686742548831" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
