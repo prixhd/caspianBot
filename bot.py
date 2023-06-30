@@ -1,21 +1,26 @@
 from aiogram import Bot, Dispatcher, types, executor
-import aiogram.utils.markdown as md
 
-from keyboards import start_command, changes_command, order_work_command, form_for_team_unsuccess_command, order_work_unsuccess_command
+from keyboards import start_command, changes_command, order_work_command, form_for_team_unsuccess_command, \
+    order_work_unsuccess_command
 from aiogram.dispatcher.filters import Text
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from dotenv import load_dotenv, find_dotenv
 import os
-from validation import emailVal, numberVal
+from validation.validation import emailVal, numberVal
 from sendMessage import send_email
 from database import db
+import middlewares
+
+from misc import rate_limit
 
 load_dotenv(find_dotenv())
 bot = Bot(token=os.getenv('BOT_TOKEN'))
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
+
+middlewares.setup(dp)
 
 
 class FormForTeam(StatesGroup):
@@ -43,6 +48,7 @@ class OrderWork(StatesGroup):
 casData = db.Data('database/db.db')
 
 
+@rate_limit(limit=10)
 @dp.message_handler(commands="start")
 async def start(message: types.Message):
     keyboard = await start_command()
@@ -50,28 +56,31 @@ async def start(message: types.Message):
         casData.add_user(message.from_user.id)
         await bot.send_message(message.from_user.id, 'Добро пожаловать в нашего телеграмм бота компании Caspian Tech! '
                                                      'Мы очень рады приветствовать Вас здесь и надеемся, что наш бот будет полезным инструментом для Вашего бизнеса.\n\n'
-                                                     'Мы специализируемся на создании профессиональных сайтов, которые помогут Вам привлечь новых клиентов и развивать свой бизнес в сети. '
-                                                     'С помощью нашего бота Вы можете узнать о наших услугах, задать любые вопросы и получить индивидуальную консультацию. '
+        # 'Мы специализируемся на создании профессиональных сайтов, которые помогут Вам привлечь новых клиентов и развивать свой бизнес в сети. '
+        # 'С помощью нашего бота Вы можете узнать о наших услугах, задать любые вопросы и получить индивидуальную консультацию. '
                                                      'Мы всегда готовы помочь Вам в создании уникального и качественного сайта, который будет соответствовать всем Вашим требованиям.\n\n'
                                                      'Выберите что вам нужно ↓', reply_markup=keyboard)
     else:
         await bot.send_message(message.from_user.id, 'Добро пожаловать в нашего телеграмм бота компании Caspian Tech! '
                                                      'Мы очень рады приветствовать Вас здесь и надеемся, что наш бот будет полезным инструментом для Вашего бизнеса.\n\n'
-                                                     'Мы специализируемся на создании профессиональных сайтов, которые помогут Вам привлечь новых клиентов и развивать свой бизнес в сети. '
-                                                     'С помощью нашего бота Вы можете узнать о наших услугах, задать любые вопросы и получить индивидуальную консультацию. '
+        # 'Мы специализируемся на создании профессиональных сайтов, которые помогут Вам привлечь новых клиентов и развивать свой бизнес в сети. '
+        # 'С помощью нашего бота Вы можете узнать о наших услугах, задать любые вопросы и получить индивидуальную консультацию. '
                                                      'Мы всегда готовы помочь Вам в создании уникального и качественного сайта, который будет соответствовать всем Вашим требованиям.\n\n'
                                                      'Выберите что вам нужно ↓', reply_markup=keyboard)
 
 
+@rate_limit(limit=10)
 @dp.message_handler(commands="call")
 async def call_operator(message: types.Message):
     await bot.send_contact(message.from_user.id, '79777777777', 'Вишня')
+
 
 # ---------------------------------------------------------------------------------------------------------------
 # ЗАПОЛНЕНИЕ ФОРМЫ, ПО ЗАЯВКЕ В КОМАНДУ CASPIAN TECH
 # ---------------------------------------------------------------------------------------------------------------
 
 
+@rate_limit(limit=10)
 @dp.message_handler(Text(equals='Стать частью команды CaspianTech'))
 async def form_for_team(message: types.Message):
     await FormForTeam.name.set()
@@ -179,7 +188,8 @@ async def form_for_team_change_first(message: types.Message):
 @dp.callback_query_handler(lambda answer: answer.data == "second_question_form", state=FormForTeam)
 async def form_for_team_change_third(message: types.Message):
     await FormForTeam.number.set()
-    await bot.send_message(message.from_user.id, "Вы хотите изменить номер телефона, введите номер и следующие вопросы снова: ")
+    await bot.send_message(message.from_user.id,
+                           "Вы хотите изменить номер телефона, введите номер и следующие вопросы снова: ")
 
 
 @dp.callback_query_handler(lambda answer: answer.data == "third_question_form", state=FormForTeam)
@@ -196,6 +206,7 @@ async def form_for_team_change_fourth(message: types.Message):
 # НАЧАЛО ЗАКАЗА РАБОТЫ В CASPIANTECH
 # -----------------------------------------------------------------------------------------------------------------
 
+@rate_limit(limit=10)
 @dp.message_handler(Text(equals="Заказать работу"))
 async def order_work(message: types.Message):
     keyboard = await order_work_command()
@@ -357,7 +368,7 @@ async def order_work_site_web_you_like(message: types.Message, state: FSMContext
                    f"10. Какие требования по дизайну сайта: {data['requirement_design']}\n" \
                    f"11. Какие требования по структуре сайта: {data['struct_web']}\n" \
                    f"12. Что обязательно должно быть  на вашем сайте: {data['should_be_on_web']}\n" \
-                   f"13. Примеры сайтов которые нравятся вам по визуалу и по функционалу: {data['web_you_like']}\n" \
+                   f"13. Примеры сайтов которые нравятся вам по визуалу и по функционалу: {data['web_you_like']}\n"
 
         send_email(message=messages)
 
@@ -408,19 +419,22 @@ async def order_work_site_no_change(message: types.Message):
 @dp.callback_query_handler(lambda answer: answer.data == "1_q_order", state=OrderWork)
 async def order_work_change_1(message: types.Message):
     await OrderWork.name.set()
-    await bot.send_message(message.from_user.id, "Вы хотите изменить первый вопрос, введите его и следующие вопросы снова: ")
+    await bot.send_message(message.from_user.id,
+                           "Вы хотите изменить первый вопрос, введите его и следующие вопросы снова: ")
 
 
 @dp.callback_query_handler(lambda answer: answer.data == "2_q_order", state=OrderWork)
 async def order_work_change_2(message: types.Message):
     await OrderWork.email.set()
-    await bot.send_message(message.from_user.id, "Вы хотите изменить второй вопрос, введите его и следующие вопросы снова: ")
+    await bot.send_message(message.from_user.id,
+                           "Вы хотите изменить второй вопрос, введите его и следующие вопросы снова: ")
 
 
 @dp.callback_query_handler(lambda answer: answer.data == "3_q_order", state=OrderWork)
 async def order_work_change_3(message: types.Message):
     await OrderWork.name_your_company.set()
-    await bot.send_message(message.from_user.id, "Вы хотите изменить третий вопрос, введите его и следующие вопросы снова: ")
+    await bot.send_message(message.from_user.id,
+                           "Вы хотите изменить третий вопрос, введите его и следующие вопросы снова: ")
 
 
 @dp.callback_query_handler(lambda answer: answer.data == "4_q_order", state=OrderWork)
@@ -432,55 +446,66 @@ async def order_work_change_4(message: types.Message):
 @dp.callback_query_handler(lambda answer: answer.data == "5_q_order", state=OrderWork)
 async def order_work_change_5(message: types.Message):
     await OrderWork.services_on_your_web.set()
-    await bot.send_message(message.from_user.id, "Вы хотите изменить пятый вопрос, введите его и следующие вопросы снова: ")
+    await bot.send_message(message.from_user.id,
+                           "Вы хотите изменить пятый вопрос, введите его и следующие вопросы снова: ")
 
 
 @dp.callback_query_handler(lambda answer: answer.data == "6_q_order", state=OrderWork)
 async def order_work_change_6(message: types.Message):
     await OrderWork.reg_company.set()
-    await bot.send_message(message.from_user.id, "Вы хотите изменить шестой вопрос, введите его и следующие вопросы снова: ")
+    await bot.send_message(message.from_user.id,
+                           "Вы хотите изменить шестой вопрос, введите его и следующие вопросы снова: ")
 
 
 @dp.callback_query_handler(lambda answer: answer.data == "7_q_order", state=OrderWork)
 async def order_work_change_7(message: types.Message):
     await OrderWork.aud_company.set()
-    await bot.send_message(message.from_user.id, "Вы хотите изменить седьмой вопрос, введите его и следующие вопросы снова: ")
+    await bot.send_message(message.from_user.id,
+                           "Вы хотите изменить седьмой вопрос, введите его и следующие вопросы снова: ")
 
 
 @dp.callback_query_handler(lambda answer: answer.data == "8_q_order", state=OrderWork)
 async def order_work_change_8(message: types.Message):
     await OrderWork.advantages_company.set()
-    await bot.send_message(message.from_user.id, "Вы хотите изменить восьмой вопрос, введите его и следующие вопросы снова: ")
+    await bot.send_message(message.from_user.id,
+                           "Вы хотите изменить восьмой вопрос, введите его и следующие вопросы снова: ")
 
 
 @dp.callback_query_handler(lambda answer: answer.data == "9_q_order", state=OrderWork)
 async def order_work_change_9(message: types.Message):
     await OrderWork.competitor_your_company.set()
-    await bot.send_message(message.from_user.id, "Вы хотите изменить девятый вопрос, введите его и следующие вопросы снова: ")
+    await bot.send_message(message.from_user.id,
+                           "Вы хотите изменить девятый вопрос, введите его и следующие вопросы снова: ")
 
 
 @dp.callback_query_handler(lambda answer: answer.data == "10_q_order", state=OrderWork)
 async def order_work_change_10(message: types.Message):
     await OrderWork.requirement_design.set()
-    await bot.send_message(message.from_user.id, "Вы хотите изменить десятый вопрос, введите его и следующие вопросы снова: ")
+    await bot.send_message(message.from_user.id,
+                           "Вы хотите изменить десятый вопрос, введите его и следующие вопросы снова: ")
 
 
 @dp.callback_query_handler(lambda answer: answer.data == "11_q_order", state=OrderWork)
 async def order_work_change_11(message: types.Message):
     await OrderWork.struct_web.set()
-    await bot.send_message(message.from_user.id, "Вы хотите изменить одиннадцатый вопрос, введите его и следующие вопросы снова: ")
+    await bot.send_message(message.from_user.id,
+                           "Вы хотите изменить одиннадцатый вопрос, введите его и следующие вопросы снова: ")
 
 
 @dp.callback_query_handler(lambda answer: answer.data == "12_q_order", state=OrderWork)
 async def order_work_change_12(message: types.Message):
     await OrderWork.should_be_on_web.set()
-    await bot.send_message(message.from_user.id, "Вы хотите изменить двенадцатый вопрос, введите его и следующие вопросы снова: ")
+    await bot.send_message(message.from_user.id,
+                           "Вы хотите изменить двенадцатый вопрос, введите его и следующие вопросы снова: ")
 
 
 @dp.callback_query_handler(lambda answer: answer.data == "13_q_order", state=OrderWork)
 async def order_work_change_13(message: types.Message):
     await OrderWork.web_you_like.set()
-    await bot.send_message(message.from_user.id, "Вы хотите изменить тринадцатый вопрос, введите его и следующие вопросы снова: ")
+    await bot.send_message(message.from_user.id,
+                           "Вы хотите изменить тринадцатый вопрос, введите его и следующие вопросы снова: ")
+
+
 # ----------------------------------------------------------------------------------------------------------------
 # КОНЕЦ ЗАКАЗЫ РАБОТЫ В CASPIANTECH
 # ----------------------------------------------------------------------------------------------------------------
