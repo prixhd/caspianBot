@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75c5f50f-44fe-423d-98a0-c46c5a98ad58" name="Changes" comment="Версия=1.4">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="75c5f50f-44fe-423d-98a0-c46c5a98ad58" name="Changes" comment="Версия=1.4" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -154,6 +151,7 @@
       <workItem from="1686742885246" duration="231000" />
       <workItem from="1688134665630" duration="2445000" />
       <workItem from="1688137187710" duration="40000" />
+      <workItem from="1688137286853" duration="49000" />
     </task>
     <task id="LOCAL-00001" summary="добавил описание бота и функцию валидации номера телефона">
       <created>1686309297087</created>
@@ -183,7 +181,15 @@
       <option name="project" value="LOCAL" />
       <updated>1688137102780</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Версия=1.4">
+      <option name="closed" value="true" />
+      <created>1688137325393</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1688137325393</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
